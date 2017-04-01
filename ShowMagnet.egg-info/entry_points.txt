@@ -1,8 +1,0 @@
-
-    [deluge.plugin.core]
-    ShowMagnet = showmagnet:CorePlugin
-    [deluge.plugin.gtkui]
-    ShowMagnet = showmagnet:GtkUIPlugin
-    [deluge.plugin.web]
-    ShowMagnet = showmagnet:WebUIPlugin
-    
