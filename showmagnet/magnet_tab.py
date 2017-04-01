@@ -23,8 +23,10 @@ class MagnetTab(Tab):
         self._tab_label = glade_tab.get_widget("magnet_tab_label")
 
         vb = gtk.VBox()
-        self.cb = gtk.Label("aaaa")
-        vb.pack_end(self.cb,expand=False,fill=False,padding=5)
+        self.cb = gtk.Label("Magnet link goes here")
+        self.cb.set_line_wrap(True)
+        self.cb.set_line_wrap_mode(True)  # Wrap on char
+        vb.pack_end(self.cb,expand=True,fill=True,padding=5)
 
         vp = gtk.Viewport()
         vp.set_shadow_type(gtk.SHADOW_NONE)
@@ -36,9 +38,6 @@ class MagnetTab(Tab):
 
         #keep track of the current selected torrent
         self._current = -1
-
-        print('fffff')
-
 
 
     def __dest(self, widget, response):
