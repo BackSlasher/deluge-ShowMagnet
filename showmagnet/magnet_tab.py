@@ -7,6 +7,8 @@ import deluge.component as component
 import deluge.common
 from deluge.ui.gtkui.torrentdetails import Tab
 
+import cgi
+
 def get_resource(filename):
     import pkg_resources, os
     return pkg_resources.resource_filename("showmagnet", os.path.join("data", filename))
@@ -21,7 +23,7 @@ class MagnetTab(Tab):
         self._tab_label = glade_tab.get_widget("magnet_tab_label")
 
         vb = gtk.VBox()
-        self.cb = gtk.CheckButton(label="Set priority of first un-downloaded piece to High")
+        self.cb = gtk.Label("aaaa")
         vb.pack_end(self.cb,expand=False,fill=False,padding=5)
 
         vp = gtk.Viewport()
@@ -46,9 +48,10 @@ class MagnetTab(Tab):
         self._current = None
 
     def __update_callback(self, mag_link):
-        print('aaaaa')
-        print(mag_link)
-        #TODO change label
+        esc_link=cgi.escape(mag_link)
+        self.cb.set_markup('<a href="{link}">{link}</a>'.format(
+            link=esc_link,
+        ))
 
 
     def update(self):
