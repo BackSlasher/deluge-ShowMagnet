@@ -1,0 +1,13 @@
+setup.py
+ShowMagnet.egg-info/PKG-INFO
+ShowMagnet.egg-info/SOURCES.txt
+ShowMagnet.egg-info/dependency_links.txt
+ShowMagnet.egg-info/entry_points.txt
+ShowMagnet.egg-info/top_level.txt
+showmagnet/__init__.py
+showmagnet/common.py
+showmagnet/core.py
+showmagnet/gtkui.py
+showmagnet/webui.py
+showmagnet/data/config.glade
+showmagnet/data/showmagnet.js
