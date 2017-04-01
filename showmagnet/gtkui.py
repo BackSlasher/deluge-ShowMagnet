@@ -45,15 +45,17 @@ from deluge.plugins.pluginbase import GtkPluginBase
 import deluge.component as component
 import deluge.common
 
-from common import get_resource
+from showmagnet.magnet_tab import MagnetTab
 
-from . import magent_tab
+def get_resource(filename):
+    import pkg_resources, os
+    return pkg_resources.resource_filename("showmagnet", os.path.join("data", filename))
 
 class GtkUI(GtkPluginBase):
     def enable(self):
         self.glade = gtk.glade.XML(get_resource("config.glade"))
 
-        self._magnet_tab = magnet_tab.MagnetTab()
+        self._magnet_tab = MagnetTab()
         component.get("TorrentDetails").add_tab(self._magnet_tab)
 
         component.get("Preferences").add_page("ShowMagnet", self.glade.get_widget("prefs_box"))

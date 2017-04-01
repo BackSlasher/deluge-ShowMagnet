@@ -7,6 +7,10 @@ import deluge.component as component
 import deluge.common
 from deluge.ui.gtkui.torrentdetails import Tab
 
+def get_resource(filename):
+    import pkg_resources, os
+    return pkg_resources.resource_filename("showmagnet", os.path.join("data", filename))
+
 class MagnetTab(Tab):
     def __init__(self):
         Tab.__init__(self)
@@ -16,12 +20,7 @@ class MagnetTab(Tab):
         self._child_widget = glade_tab.get_widget("magnet_tab")
         self._tab_label = glade_tab.get_widget("magnet_tab_label")
 
-        self._ms = MultiSquare(0,['#000000','#FF0000','#0000FF'],
-                               display=self._child_widget.get_display(),
-                               menu=glade_tab.get_widget("priority_menu"))
-
         vb = gtk.VBox()
-        vb.add(self._ms)
         self.cb = gtk.CheckButton(label="Set priority of first un-downloaded piece to High")
         self.cb.connect("toggled",self.onPrioTogg)
         vb.pack_end(self.cb,expand=False,fill=False,padding=5)
