@@ -68,3 +68,8 @@ class Core(CorePluginBase):
     def get_config(self):
         """Returns the config dictionary"""
         return self.config.config
+
+    @export
+    def get_link(self, torr):
+        # TODO calc magnet link
+        return 'gagagagagag'
