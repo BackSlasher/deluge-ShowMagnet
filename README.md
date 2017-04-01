@@ -1,5 +1,7 @@
 # ShowMagnet Deluge plugin
 
+![Screenshot](https://github.com/BackSlasher/deluge-ShowMagnet/raw/master/readme/screnshot.png)
+
 ## What
 Adds a panel that shows a magnet link to the torrent you're currently selecting
 
