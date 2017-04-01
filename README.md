@@ -18,4 +18,4 @@ PR me!
 * Better error handling
 
 ## Author
-Nitzan Raz (<backslasher.net>)
+Nitzan Raz (<http://backslasher.net>)
