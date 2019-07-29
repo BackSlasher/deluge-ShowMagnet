@@ -71,7 +71,10 @@ class Core(CorePluginBase):
         """Returns the config dictionary"""
         return self.config.config
 
-    def generate_magnet(self, torrent_id, name, trackers):
+    def generate_magnet(self, t_hash):
+        torrent_id, t_status = list(t_hash.items())[0]
+        name = t_status['name']
+        trackers = t_status['trackers']
         magnet_template = "magnet:?xt=urn:btih:{hash}&dn={name}";
         res = magnet_template.format(
             hash=torrent_id,
@@ -82,10 +85,13 @@ class Core(CorePluginBase):
         return res
 
 
-
     @export
     def get_link(self, torr):
         # TODO calc magnet link
-        t_hash = component.get("Core").get_torrents_status({"id": torr}, ['trackers', 'name'])
-        t_id, t_status = t_hash.items()[0]
-        return self.generate_magnet(t_id, t_status['name'], t_status['trackers'])
+        res = component.get("Core").get_torrents_status({"id": torr}, ['trackers', 'name'])
+        # Deluge2 -> deferred
+        if isinstance(res,dict):
+            return self.generate_magnet(res)
+        else:
+            res.addCallback(self.generate_magnet)
+            return res

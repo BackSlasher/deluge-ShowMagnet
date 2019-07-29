@@ -1,3 +1,5 @@
+# Deluge crap
+/config/
 *.pyc
 .*.swp
 
