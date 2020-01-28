@@ -16,7 +16,13 @@ try:
 except ImportError:
     from deluge.ui.gtk3.torrentdetails import Tab
 
-import cgi
+# https://github.com/xhtml2pdf/xhtml2pdf/issues/443
+import six
+if not six.PY2:
+    from html import escape as html_escape
+else:
+    from cgi import escape as html_escape
+
 
 try:
     from deluge.plugins.pluginbase import GtkPluginBase
@@ -72,7 +78,7 @@ class MagnetTab(Tab):
         self._current = None
 
     def __update_callback(self, mag_link):
-        esc_link=cgi.escape(mag_link)
+        esc_link=html_escape(mag_link)
         self.cb.set_markup('<a href="{link}">{link}</a>'.format(
             link=esc_link,
         ))

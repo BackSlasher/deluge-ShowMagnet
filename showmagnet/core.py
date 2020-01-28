@@ -37,7 +37,7 @@
 #    statement from all source files in the program, then also delete it here.
 #
 
-import cgi
+import urllib.parse
 
 from deluge.log import LOG as log
 from deluge.plugins.pluginbase import CorePluginBase
@@ -72,16 +72,18 @@ class Core(CorePluginBase):
         return self.config.config
 
     def generate_magnet(self, t_hash):
+        # https://stackoverflow.com/a/12480263
         torrent_id, t_status = list(t_hash.items())[0]
         name = t_status['name']
         trackers = t_status['trackers']
-        magnet_template = "magnet:?xt=urn:btih:{hash}&dn={name}";
-        res = magnet_template.format(
-            hash=torrent_id,
-            name=cgi.escape(name),
+        querystring = urllib.parse.urlencode(
+            {
+                'dn':name,
+                'tr':[tr['url'] for tr in trackers]
+            },
+            doseq=True
         )
-        tracker_template="&tr={}"
-        res += ''.join([tracker_template.format(tr['url']) for tr in trackers])
+        res = f'magnet:?xt=urn:btih:{torrent_id}&{querystring}'
         return res
 
 
