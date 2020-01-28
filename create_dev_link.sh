@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
-CONFIGDIR="$(realpath config)"
-cd /home/nitz/projects/deluge/showmagnet
-mkdir temp
-export PYTHONPATH=./temp
-/usr/bin/python setup.py build develop --install-dir ./temp
-pwd
-cp ./temp/ShowMagnet.egg-link "$CONFIGDIR/plugins/"
-rm -fr ./temp
+cd "$(dirname "$0")"
+CONFIGDIR="config"
+[ -d "$CONFIGDIR/plugins" ] || mkdir -p "$CONFIGDIR/plugins"
+TEMP="$(mktemp -d)"
+export PYTHONPATH="$TEMP"
+python setup.py build develop --install-dir "$TEMP"
+cp "$TEMP"/ShowMagnet.egg-link "$CONFIGDIR/plugins"
+
+echo "deluge-gtk -c $CONFIGDIR"
